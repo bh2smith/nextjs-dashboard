@@ -26,12 +26,13 @@ export async function authenticate(
   }
 }
 
-
 const FormSchema = z.object({
   id: z.string(),
-  customerId: z.string({invalid_type_error: "please select a customer"}),
-  amount: z.coerce.number().gt(0, "Please enter an amount greater than 0."),
-  status: z.enum(['pending', 'paid'], {invalid_type_error: 'Please select an invoice status'}),
+  customerId: z.string({ invalid_type_error: 'please select a customer' }),
+  amount: z.coerce.number().gt(0, 'Please enter an amount greater than 0.'),
+  status: z.enum(['pending', 'paid'], {
+    invalid_type_error: 'Please select an invoice status',
+  }),
   date: z.string(),
 });
 
@@ -48,7 +49,7 @@ export type State = {
 // TODO(ch14) Why prevState unnused?
 export async function createInvoice(prevState: State, formData: FormData) {
   const validatedFields = CreateInvoice.safeParse({
-  // const { customerId, amount, status } = CreateInvoice.parse({
+    // const { customerId, amount, status } = CreateInvoice.parse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
     status: formData.get('status'),
